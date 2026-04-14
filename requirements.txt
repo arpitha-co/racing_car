@@ -1,0 +1,7 @@
+numpy
+gymnasium
+stable-baselines3
+torch
+matplotlib
+imageio-ffmpeg
+# Optional (system) dependency: ffmpeg (install via apt/yum/brew)
