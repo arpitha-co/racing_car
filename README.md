@@ -1,13 +1,10 @@
-================================================================================
-                    Deep Reinforcement Learning - Task 2
-================================================================================
+                                   Racing Environment
 
 OVERVIEW
 --------
-This project contains reinforcement learning agents trained on two different 
-environments:
+This project contains reinforcement learning agents trained on:
 1. Race Environment (race_acc.py) - A racing track with gates
-2. Infinite Valley Environment (Custom_Environment/) - Custom terrain navigation
+
 
 The agents use Soft Actor-Critic (SAC) algorithm from Stable-Baselines3.
 
@@ -26,13 +23,10 @@ REQUIREMENTS
 
 INSTALLATION
 ------------
-1. Navigate to the project directory:
-   cd "/Users/arpitha/Desktop/OTH/3rd Semester/DRL/Module_work/Task_2/Final"
-
-2. Install Python dependencies:
+1. Install Python dependencies:
    pip install -r requirements.txt
 
-3. Install ffmpeg (for video/animation generation):
+2. Install ffmpeg (for video/animation generation):
    - macOS: brew install ffmpeg
    - Linux: sudo apt-get install ffmpeg  OR  sudo yum install ffmpeg
    - Windows: Download from https://ffmpeg.org/download.html
@@ -54,18 +48,6 @@ RUNNING THE CODE
    - Save the trained model
 
 
-2. CUSTOM ENVIRONMENT (Infinite Valley):
-   ---------------------------------------
-   To train the agent on the custom infinite valley environment:
-   
-   cd Custom_Environment
-   python agent.py
-   
-   This will:
-   - Train a SAC agent on the infinite valley terrain
-   - Generate visualizations of the agent's navigation
-   - Save training results to "training_results.txt"
-
 
 PROJECT STRUCTURE
 -----------------
@@ -73,11 +55,7 @@ Final/
 ├── agent.py                    # Main training script for race environment
 ├── race_acc.py                 # Race environment implementation
 ├── requirements.txt            # Python dependencies
-├── README.txt                  # This file
-├── Custom_Environment/
-│   ├── agent.py                # Training script for infinite valley
-│   ├── infinite_valley_env.py  # Custom environment implementation
-│   └── training_results.txt    # Training logs and results
+├── README.md.                  # This file
 └── Inference/
     ├── race_acc.py             # Race environment for inference
     └── run_inference.py        # Inference script for trained models
@@ -90,10 +68,6 @@ KEY FEATURES
   * Gate-based racing track
   * Continuous action space (velocity and rotation)
   
-- Infinite Valley Environment:
-  * Unbounded 2D terrain with periodic hills/valleys
-  * Gravity effects and state-dependent friction
-  * Camera follows agent for infinite exploration
 
 
 OUTPUT FILES
