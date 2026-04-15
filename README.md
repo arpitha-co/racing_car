@@ -92,6 +92,6 @@ NOTES
 - Default hyperparameters are tuned for the respective environments
 
 
-**Contributors**
+## Contributors
 - [Arpitha](https://github.com/arpitha-co) 
 
