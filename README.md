@@ -91,3 +91,7 @@ NOTES
 - You can interrupt training with Ctrl+C and resume later by loading the saved model
 - Default hyperparameters are tuned for the respective environments
 
+
+**Contributors**
+- [Arpitha](https://github.com/arpitha-co) 
+
