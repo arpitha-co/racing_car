@@ -1,4 +1,4 @@
-                                   Racing Environment
+                           #        Racing Environment
 
 OVERVIEW
 --------
@@ -47,18 +47,6 @@ RUNNING THE CODE
    - Display training progress and performance metrics
    - Save the trained model
 
-
-
-PROJECT STRUCTURE
------------------
-Final/
-├── agent.py                    # Main training script for race environment
-├── race_acc.py                 # Race environment implementation
-├── requirements.txt            # Python dependencies
-├── README.md.                  # This file
-└── Inference/
-    ├── race_acc.py             # Race environment for inference
-    └── run_inference.py        # Inference script for trained models
 
 
 KEY FEATURES
