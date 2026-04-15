@@ -1,4 +1,4 @@
-                           #        Racing Environment
+RACING ENVIRONMENT
 
 OVERVIEW
 --------
