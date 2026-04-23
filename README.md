@@ -1,4 +1,4 @@
-# RACING ENVIRONMENT
+# Reinforcement Learning for Autonomous Race Track Navigation
 
 OVERVIEW
 --------
