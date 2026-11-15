@@ -5,24 +5,27 @@
 ![Stable-Baselines3](https://img.shields.io/badge/Stable--Baselines3-SAC-6A5ACD)
 ![Gymnasium](https://img.shields.io/badge/Gymnasium-0081A5)
 
-A **Soft Actor-Critic (SAC)** agent that learns time-optimal driving through a 34-gate race course. The vehicle has acceleration limits, speed-dependent steering and noisy actuation. After training, the policy completes the full course in **89 steps**.
+A **Soft Actor-Critic (SAC)** agent that learns time-optimal driving through a 34-gate race course. The vehicle has acceleration limits, speed-dependent steering and noisy actuation. The trained model included in this repo finishes the course in **50 / 50** evaluation runs, taking a median of **85 steps**.
 
 <p align="center">
-  <img src="media/episode_400.gif" alt="Trained SAC agent completing the 34-gate parcour" width="480">
+  <img src="media/best_model.gif" alt="Trained SAC agent completing the 34-gate parcour" width="480">
   <br>
-  <em>Trained policy (episode 400) driving the full parcour. The red line marks the next gate.</em>
+  <em>The included model (<code>models/sac_parcour_best.zip</code>) driving the full parcour. The red line marks the next gate.</em>
 </p>
 
 ---
 
 ## Results
 
+Evaluation of [`models/sac_parcour_best.zip`](models) over **50 episodes**, using the deterministic policy with the environment's actuation noise switched **on**:
+
 | Metric | Result |
 |---|---|
-| Track completion | **100%** (all 34 gates) |
-| Steps for the converged trajectory | **89** (≈ 17.8 s of simulated time at Δt = 0.2 s) |
-| Training budget per run | 150,000 environment steps |
-| Robustness | Trained and evaluated with Gaussian noise on both acceleration commands |
+| Success rate (all 34 gates passed) | **50 / 50 (100%)** |
+| Steps to finish | **median 85** (min 83, max 86), ≈ 17 s of simulated time at Δt = 0.2 s |
+| Training budget | 150,000 environment steps |
+
+Reproduce it with `python Inference/evaluate.py --model models/sac_parcour_best.zip --episodes 50`.
 
 ### Learning progression
 
@@ -34,7 +37,7 @@ The same course, rolled out with the deterministic policy at different points in
 | Loses the course after a few gates | Reaches about halfway (gate 17 / 34) before the time limit |
 | **Episode 100** | **Episode 400** |
 | <img src="media/episode_100.gif" width="380" alt="Episode 100"> | <img src="media/episode_400.gif" width="380" alt="Episode 400: full course completed"> |
-| Gets to the second-to-last gate before the time limit | Completes all 34 gates in 89 steps |
+| Gets to the second-to-last gate before the time limit | Completes all 34 gates |
 
 Full-resolution MP4s are in [`media/`](media).
 
@@ -93,8 +96,11 @@ racing_car/
 ├── agent.py                 # Gymnasium adapter, reward shaping, SAC training (10 runs)
 ├── race_acc.py              # Race environment: dynamics, gates, plotting
 ├── Inference/
-│   └── run_inference.py     # Load a trained model, run episodes, export MP4s
-├── media/                   # Training-progression GIFs and MP4s
+│   ├── run_inference.py     # Load a trained model, run episodes, export MP4s
+│   └── evaluate.py          # Success rate and steps over N episodes
+├── models/
+│   └── sac_parcour_best.zip # Trained SAC policy (best of the training runs)
+├── media/                   # Rollout GIFs and MP4s
 └── requirements.txt
 ```
 
@@ -107,7 +113,18 @@ pip install -r requirements.txt
 # ffmpeg is needed to save videos:  brew install ffmpeg  |  sudo apt-get install ffmpeg
 ```
 
-### Train
+### Try the trained model
+
+```bash
+# watch / record it
+python Inference/run_inference.py --model models/sac_parcour_best.zip \
+  --deterministic --episodes 3 --save-video --out-dir videos
+
+# measure it
+python Inference/evaluate.py --model models/sac_parcour_best.zip --episodes 50
+```
+
+### Train from scratch
 
 ```bash
 python agent.py                 # set SB3_DEVICE=cpu|cuda to force a device
@@ -122,13 +139,7 @@ For each of the 10 runs, this writes:
 
 A summary across all runs is written to `training_results.txt`.
 
-### Run a trained model
-
-```bash
-python Inference/run_inference.py \
-  --model sac_parcour_1_<timestamp>.zip \
-  --deterministic --episodes 3 --save-video --out-dir videos
-```
+Any of these `.zip` files can be passed to the inference and evaluation scripts in place of the included model.
 
 To drive the course yourself with the arrow keys, run `python race_acc.py`.
 
