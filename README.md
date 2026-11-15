@@ -1,97 +1,164 @@
-# Reinforcement Learning for Autonomous Race Track Navigation
+# 🏎️ Autonomous Racing using Reinforcement Learning
 
-OVERVIEW
---------
-This project contains reinforcement learning agents trained on:
-1. Race Environment (race_acc.py) - A racing track with gates
+A reinforcement learning project focused on training an autonomous racing agent to navigate a custom gate-based racing environment using the **Soft Actor-Critic (SAC)** algorithm.
 
+The project explores continuous vehicle control, autonomous navigation, and learning progression through simulation.
 
-The agents use Soft Actor-Critic (SAC) algorithm from Stable-Baselines3.
+## 🎥 Training Progression
 
+Watch how the agent's behaviour evolves across different training episodes.
 
-REQUIREMENTS
-------------
-- Python 3.8 or higher
-- numpy
-- gymnasium
-- stable-baselines3
-- torch (PyTorch)
-- matplotlib
-- imageio-ffmpeg
-- ffmpeg (system dependency - install via apt/yum/brew)
+| Episode 10 | Episode 40 |
+|:---:|:---:|
+| ![Episode 10](animations_restful/episode_10.gif) | ![Episode 40](animations_restful/episode_40.gif) |
+| **Initial Training** | **Early Learning** |
 
+| Episode 100 | Episode 400 |
+|:---:|:---:|
+| ![Episode 100](animations_restful/episode_100.gif) | ![Episode 400](animations_restful/episode_400.gif) |
+| **Intermediate Training** | **Later Training** |
 
-INSTALLATION
-------------
-1. Install Python dependencies:
-   pip install -r requirements.txt
+*The animations show the agent at different training checkpoints. Compare its navigation behaviour and vehicle control across episodes.*
 
-2. Install ffmpeg (for video/animation generation):
-   - macOS: brew install ffmpeg
-   - Linux: sudo apt-get install ffmpeg  OR  sudo yum install ffmpeg
-   - Windows: Download from https://ffmpeg.org/download.html
+> Replace the GIF filenames above with your actual filenames if they differ. GitHub README files display GIF animations directly. For MP4 videos, use linked video files or GitHub video attachments instead of Markdown image syntax.
 
+## 📌 Project Overview
 
-RUNNING THE CODE
-----------------
+This project implements a reinforcement learning agent that learns to navigate a racing track by interacting with a custom simulation environment.
 
-1. RACE ENVIRONMENT (Main Agent):
-   ---------------------------------
-   To train the agent on the race environment:
-   
-   python agent.py
-   
-   This will:
-   - Train a SAC agent on the race environment
-   - Save animations every N episodes to "animations_restful/" folder
-   - Display training progress and performance metrics
-   - Save the trained model
+The agent uses the Soft Actor-Critic algorithm, a model-free off-policy reinforcement learning algorithm designed for continuous action spaces.
 
+### Key Features
 
+- Custom gate-based racing environment.
+- Autonomous vehicle navigation.
+- Continuous action space for velocity and rotation.
+- SAC-based reinforcement learning.
+- Vehicle dynamics with acceleration limits.
+- Training checkpoints and simulation animations.
+- Saved trained models and training logs.
 
-KEY FEATURES
-------------
-- Race Environment:
-  * Vehicle dynamics with acceleration limits
-  * Gate-based racing track
-  * Continuous action space (velocity and rotation)
-  
+## 🧠 Algorithm
 
+**Soft Actor-Critic (SAC)**
 
-OUTPUT FILES
-------------
-After running the code, you will find:
-- animations_restful/: GIF animations of agent performance (race environment)
-- Trained model files (*.zip)
-- Training logs and metrics
-- Custom_Environment/training_results.txt: Performance logs
+SAC is an off-policy actor-critic reinforcement learning algorithm that optimises expected cumulative rewards while encouraging exploration through entropy regularisation.
 
+Implementation: [Stable-Baselines3](https://stable-baselines3.readthedocs.io/)
 
-TROUBLESHOOTING
----------------
-1. If you encounter "No module named" errors:
-   - Make sure all dependencies are installed: pip install -r requirements.txt
+## 🛠️ Technologies Used
 
-2. If animations are not generated:
-   - Ensure ffmpeg is installed on your system
-   - Check write permissions in the output directories
+| Technology | Purpose |
+|---|---|
+| Python | Main programming language |
+| PyTorch | Deep learning framework |
+| Stable-Baselines3 | SAC implementation |
+| Gymnasium | Custom simulation environment |
+| NumPy | Numerical computations |
+| Matplotlib | Training visualisation |
+| FFmpeg | Animation generation |
 
-3. If training is slow:
-   - The code uses PyTorch. For GPU acceleration, install CUDA-enabled PyTorch
-   - Reduce the number of training steps or episodes
+## 📂 Project Structure
 
-4. Import errors with race_acc:
-   - Make sure you're in the correct directory when running agent.py
+```text
+Racing-Environment/
+│
+├── agent.py
+├── race_acc.py
+├── requirements.txt
+│
+├── animations_restful/
+│   ├── episode_10.gif
+│   ├── episode_40.gif
+│   ├── episode_100.gif
+│   └── episode_400.gif
+│
+├── Custom_Environment/
+│   └── training_results.txt
+│
+└── trained_models/
+    └── model.zip
+```
 
+## ⚙️ Installation
 
-NOTES
------
-- Training can take significant time depending on your hardware
-- GIF generation happens periodically during training
-- You can interrupt training with Ctrl+C and resume later by loading the saved model
-- Default hyperparameters are tuned for the respective environments
+### 1. Clone the repository
 
+```bash
+git clone YOUR_REPOSITORY_URL
+cd Racing-Environment
+```
 
-## Contributors
-- [Arpitha](https://github.com/arpitha-co) 
+### 2. Install dependencies
 
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Install FFmpeg
+
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Ubuntu/Linux:**
+```bash
+sudo apt-get install ffmpeg
+```
+
+**Windows:**
+
+Download FFmpeg from https://ffmpeg.org/download.html
+
+## 🚀 Running the Project
+
+Start training the autonomous racing agent:
+
+```bash
+python agent.py
+```
+
+The training script:
+- Initialises the SAC agent.
+- Interacts with the racing environment.
+- Learns continuous vehicle control.
+- Saves simulation animations at configured checkpoints.
+- Saves the trained model and training logs.
+
+## 📊 Training Evaluation
+
+The project includes visual checkpoints at:
+
+- Episode 10
+- Episode 40
+- Episode 100
+- Episode 400
+
+These checkpoints provide a visual comparison of the agent's behaviour during training.
+
+Further quantitative evaluation can include:
+- Average episode reward.
+- Number of gates successfully passed.
+- Episode completion rate.
+- Navigation consistency.
+- Vehicle control stability.
+
+## 🔬 Future Improvements
+
+- Evaluate navigation performance across multiple random seeds.
+- Analyse reward progression during training.
+- Improve exploration and reward design.
+- Investigate training stability and convergence.
+- Compare SAC with other reinforcement learning algorithms.
+- Evaluate generalisation to different track configurations.
+
+## 👩‍💻 Contributor
+
+**Arpitha Thimmegowda**
+
+[![GitHub](https://img.shields.io/badge/GitHub-arpitha--co-black?logo=github)](https://github.com/arpitha-co)
+
+---
+
+*Exploring autonomous systems through reinforcement learning.*
