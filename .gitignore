@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+tensorboard_logs/
+animations_restful*/
+episode_steps_*.csv
+training_results.txt
+sac_parcour_*.zip
+inference_videos/
+videos/

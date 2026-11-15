@@ -16,7 +16,7 @@ from matplotlib.animation import FFMpegWriter
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from race_acc import Parcour
-from agent_restful import RaceEnvGymAdapter, ScaledActionWrapper
+from agent import RaceEnvGymAdapter, ScaledActionWrapper
 from gymnasium.wrappers import TimeLimit
 from stable_baselines3 import SAC
 import torch
@@ -126,7 +126,3 @@ def main():
 
 if __name__ == "__main__":
     main()
- 
-
-
-#python Inference/run_inference.py \  --model /home/d33f/drl/sac_parcour_1_20260208_154919.zip \  --instance 1 --episodes 1 --save-video --out-dir ./videos --fps 30 

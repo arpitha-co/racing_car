@@ -1,164 +1,142 @@
-# 🏎️ Autonomous Racing using Reinforcement Learning
+# Reinforcement Learning for Autonomous Race Track Navigation
 
-A reinforcement learning project focused on training an autonomous racing agent to navigate a custom gate-based racing environment using the **Soft Actor-Critic (SAC)** algorithm.
+![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
+![Stable-Baselines3](https://img.shields.io/badge/Stable--Baselines3-SAC-6A5ACD)
+![Gymnasium](https://img.shields.io/badge/Gymnasium-0081A5)
 
-The project explores continuous vehicle control, autonomous navigation, and learning progression through simulation.
+A **Soft Actor-Critic (SAC)** agent that learns time-optimal driving through a 34-gate race course. The vehicle has acceleration limits, speed-dependent steering and noisy actuation. After training, the policy completes the full course in **89 steps**.
 
-## 🎥 Training Progression
-
-Watch how the agent's behaviour evolves across different training episodes.
-
-| Episode 10 | Episode 40 |
-|:---:|:---:|
-| ![Episode 10](animations_restful/episode_10.gif) | ![Episode 40](animations_restful/episode_40.gif) |
-| **Initial Training** | **Early Learning** |
-
-| Episode 100 | Episode 400 |
-|:---:|:---:|
-| ![Episode 100](animations_restful/episode_100.gif) | ![Episode 400](animations_restful/episode_400.gif) |
-| **Intermediate Training** | **Later Training** |
-
-*The animations show the agent at different training checkpoints. Compare its navigation behaviour and vehicle control across episodes.*
-
-> Replace the GIF filenames above with your actual filenames if they differ. GitHub README files display GIF animations directly. For MP4 videos, use linked video files or GitHub video attachments instead of Markdown image syntax.
-
-## 📌 Project Overview
-
-This project implements a reinforcement learning agent that learns to navigate a racing track by interacting with a custom simulation environment.
-
-The agent uses the Soft Actor-Critic algorithm, a model-free off-policy reinforcement learning algorithm designed for continuous action spaces.
-
-### Key Features
-
-- Custom gate-based racing environment.
-- Autonomous vehicle navigation.
-- Continuous action space for velocity and rotation.
-- SAC-based reinforcement learning.
-- Vehicle dynamics with acceleration limits.
-- Training checkpoints and simulation animations.
-- Saved trained models and training logs.
-
-## 🧠 Algorithm
-
-**Soft Actor-Critic (SAC)**
-
-SAC is an off-policy actor-critic reinforcement learning algorithm that optimises expected cumulative rewards while encouraging exploration through entropy regularisation.
-
-Implementation: [Stable-Baselines3](https://stable-baselines3.readthedocs.io/)
-
-## 🛠️ Technologies Used
-
-| Technology | Purpose |
-|---|---|
-| Python | Main programming language |
-| PyTorch | Deep learning framework |
-| Stable-Baselines3 | SAC implementation |
-| Gymnasium | Custom simulation environment |
-| NumPy | Numerical computations |
-| Matplotlib | Training visualisation |
-| FFmpeg | Animation generation |
-
-## 📂 Project Structure
-
-```text
-Racing-Environment/
-│
-├── agent.py
-├── race_acc.py
-├── requirements.txt
-│
-├── animations_restful/
-│   ├── episode_10.gif
-│   ├── episode_40.gif
-│   ├── episode_100.gif
-│   └── episode_400.gif
-│
-├── Custom_Environment/
-│   └── training_results.txt
-│
-└── trained_models/
-    └── model.zip
-```
-
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone YOUR_REPOSITORY_URL
-cd Racing-Environment
-```
-
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Install FFmpeg
-
-**macOS:**
-```bash
-brew install ffmpeg
-```
-
-**Ubuntu/Linux:**
-```bash
-sudo apt-get install ffmpeg
-```
-
-**Windows:**
-
-Download FFmpeg from https://ffmpeg.org/download.html
-
-## 🚀 Running the Project
-
-Start training the autonomous racing agent:
-
-```bash
-python agent.py
-```
-
-The training script:
-- Initialises the SAC agent.
-- Interacts with the racing environment.
-- Learns continuous vehicle control.
-- Saves simulation animations at configured checkpoints.
-- Saves the trained model and training logs.
-
-## 📊 Training Evaluation
-
-The project includes visual checkpoints at:
-
-- Episode 10
-- Episode 40
-- Episode 100
-- Episode 400
-
-These checkpoints provide a visual comparison of the agent's behaviour during training.
-
-Further quantitative evaluation can include:
-- Average episode reward.
-- Number of gates successfully passed.
-- Episode completion rate.
-- Navigation consistency.
-- Vehicle control stability.
-
-## 🔬 Future Improvements
-
-- Evaluate navigation performance across multiple random seeds.
-- Analyse reward progression during training.
-- Improve exploration and reward design.
-- Investigate training stability and convergence.
-- Compare SAC with other reinforcement learning algorithms.
-- Evaluate generalisation to different track configurations.
-
-## 👩‍💻 Contributor
-
-**Arpitha Thimmegowda**
-
-[![GitHub](https://img.shields.io/badge/GitHub-arpitha--co-black?logo=github)](https://github.com/arpitha-co)
+<p align="center">
+  <img src="media/episode_400.gif" alt="Trained SAC agent completing the 34-gate parcour" width="480">
+  <br>
+  <em>Trained policy (episode 400) driving the full parcour. The red line marks the next gate.</em>
+</p>
 
 ---
 
-*Exploring autonomous systems through reinforcement learning.*
+## Results
+
+| Metric | Result |
+|---|---|
+| Track completion | **100%** (all 34 gates) |
+| Steps for the converged trajectory | **89** (≈ 17.8 s of simulated time at Δt = 0.2 s) |
+| Training budget per run | 150,000 environment steps |
+| Robustness | Trained and evaluated with Gaussian noise on both acceleration commands |
+
+### Learning progression
+
+The same course, rolled out with the deterministic policy at different points in training:
+
+| Episode 10 | Episode 40 |
+|:---:|:---:|
+| <img src="media/episode_10.gif" width="380" alt="Episode 10: agent leaves the track early"> | <img src="media/episode_40.gif" width="380" alt="Episode 40"> |
+| Loses the course after a few gates | Reaches about halfway (gate 17 / 34) before the time limit |
+| **Episode 100** | **Episode 400** |
+| <img src="media/episode_100.gif" width="380" alt="Episode 100"> | <img src="media/episode_400.gif" width="380" alt="Episode 400: full course completed"> |
+| Gets to the second-to-last gate before the time limit | Completes all 34 gates in 89 steps |
+
+Full-resolution MP4s are in [`media/`](media).
+
+---
+
+## Problem setup
+
+The environment ([`race_acc.py`](race_acc.py)) is a 2D vehicle that must pass a sequence of gates (line segments) in order.
+
+| | |
+|---|---|
+| **State** | `x, y, θ, v_trans, v_rot` |
+| **Action** | translational and rotational acceleration, limited to ±0.5 m/s² and ±0.2 rad/s² |
+| **Dynamics** | Δt = 0.2 s, max 5 m/s, no reversing; available steering shrinks as speed increases |
+| **Noise** | Gaussian noise added to both acceleration commands at every step |
+| **Episode** | ends when the last gate is passed, or after 300 steps |
+| **Course** | `Parcour`: 34 gates forming a winding loop (`StraightRace` and `CurvyRace` are also included) |
+
+## Approach
+
+The original environment is left unchanged. [`agent.py`](agent.py) wraps it in a Gymnasium-compatible adapter that adds:
+
+**Richer observations (13-D)**: the 5 base state values plus the centres of the next **4 gates** expressed in the vehicle's own frame. This lets the policy plan ahead instead of reacting gate by gate.
+
+**Reward shaping**
+
+| Term | Purpose |
+|---|---|
+| + bonus per gate passed, large bonus for the final gate | sparse task reward |
+| + 2 × (decrease in distance to the next gate centre) | dense progress signal |
+| − small constant per step | encourages the fastest lap |
+| − penalty near the world boundary | discourages drifting away |
+
+**Action scaling**: SAC outputs actions in [-1, 1], which are mapped to the physical acceleration limits.
+
+**SAC hyperparameters** (tuned in a hyperparameter sweep)
+
+| Parameter | Value |
+|---|---|
+| Network | MLP, 2 × 256 |
+| Learning rate | 2.77 × 10⁻⁴ |
+| γ / τ | 0.932 / 0.028 |
+| Batch size / buffer | 64 / 1M |
+| Gradient steps per env step | 4 |
+| Entropy coefficient | auto (init 0.1) |
+| Warm-up steps | 4,822 |
+
+To measure **sample efficiency** and consistency, training runs as 10 independent instances. Each logs the environment steps needed to solve the course for the first time, and its best (shortest) solving episode.
+
+---
+
+## Repository structure
+
+```text
+racing_car/
+├── agent.py                 # Gymnasium adapter, reward shaping, SAC training (10 runs)
+├── race_acc.py              # Race environment: dynamics, gates, plotting
+├── Inference/
+│   └── run_inference.py     # Load a trained model, run episodes, export MP4s
+├── media/                   # Training-progression GIFs and MP4s
+└── requirements.txt
+```
+
+## Getting started
+
+```bash
+git clone https://github.com/arpitha-co/racing_car.git
+cd racing_car
+pip install -r requirements.txt
+# ffmpeg is needed to save videos:  brew install ffmpeg  |  sudo apt-get install ffmpeg
+```
+
+### Train
+
+```bash
+python agent.py                 # set SB3_DEVICE=cpu|cuda to force a device
+```
+
+For each of the 10 runs, this writes:
+
+- `animations_restful_<run>/parcour_ep_*.mp4`: a rollout every 10 episodes
+- `episode_steps_<run>.csv`: steps per episode
+- `tensorboard_logs/`: reward and episode-length curves (`tensorboard --logdir tensorboard_logs`)
+- `sac_parcour_<run>_<timestamp>.zip`: the trained model
+
+A summary across all runs is written to `training_results.txt`.
+
+### Run a trained model
+
+```bash
+python Inference/run_inference.py \
+  --model sac_parcour_1_<timestamp>.zip \
+  --deterministic --episodes 3 --save-video --out-dir videos
+```
+
+To drive the course yourself with the arrow keys, run `python race_acc.py`.
+
+---
+
+## Author
+
+**Arpitha Thimmegowda** · M.Sc. AI for Industrial Applications, OTH Amberg-Weiden
+[GitHub](https://github.com/arpitha-co) · [LinkedIn](https://www.linkedin.com/in/arpitha-t-aa375421b/)
+
+*The base race environment (`race_acc.py`) was provided as part of a university reinforcement-learning course.*

@@ -4,4 +4,5 @@ stable-baselines3
 torch
 matplotlib
 imageio-ffmpeg
+keyboard  # only used for manual driving in race_acc.py, but imported at module level
 # Optional (system) dependency: ffmpeg (install via apt/yum/brew)
